@@ -1,4 +1,5 @@
 var GL;
+var line = [];
 var alis = [];
 var arrTelinga = [];
 var arrMulut = [];
@@ -92,7 +93,7 @@ class MyObject {
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.OBJECT_FACES);
         GL.drawElements(GL.TRIANGLES, this.object_faces.length, GL.UNSIGNED_SHORT, 0);
         this.child.forEach(obj => {
-            if (alis.includes(obj) | arrMulut.includes(obj)) {
+            if (alis.includes(obj) | arrMulut.includes(obj) | line.includes(obj)) {
                 obj.drawLine();            
             } else{
                 obj.draw();
@@ -107,36 +108,14 @@ class MyObject {
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.OBJECT_FACES);
         GL.drawElements(GL.LINE_STRIP, this.object_faces.length, GL.UNSIGNED_SHORT, 0);
         this.child.forEach(obj => {
-            if (alis.includes(obj) | arrMulut.includes(obj)) {
+            if (alis.includes(obj) | arrMulut.includes(obj) | line.includes(obj)) {
                 obj.drawLine();            
             } else{
                 obj.draw();
             }            
         })
     }
-    // setRotateMove(PHI, THETA, r) {
-    //     LIBS.rotateZ(this.MOVEMATRIX, r);
-    //     LIBS.rotateY(this.MOVEMATRIX, THETA);
-    //     LIBS.rotateX(this.MOVEMATRIX, PHI);
-    //     this.child.forEach(obj => {
-    //         obj.setRotateMove(PHI, THETA, r);
-    //     });
-    // }
-    // setTranslateMove(x, y, z) {
-    //     LIBS.translateZ(this.MOVEMATRIX, z);
-    //     LIBS.translateY(this.MOVEMATRIX, y);
-    //     LIBS.translateX(this.MOVEMATRIX, x);
-    // }
-    // setScale(s) {
-    //     var scale = LIBS.scale(s);
-    //     this.scaling(scale);
-    // }
-    // scaling(m4){
-    //     this.MOVEMATRIX = LIBS.mul(this.MOVEMATRIX, m4);
-    //     this.child.forEach(obj => {
-    //         obj.scaling(m4);
-    //     });
-    // }
+    
     setIdentityMove() {
         LIBS.set_I4(this.MOVEMATRIX);
         this.child.forEach(obj => {
@@ -194,5 +173,16 @@ class MyObject {
         this.child.forEach(obj => {
             obj.setScale(s);
         });
+    }
+
+    setArrTranslate(x, y, z) {
+        this.translate = [x, y, z];
+        this.child.forEach(obj => {
+            obj.setArrTranslate(x, y, z);
+        });
+    }
+
+    getRotate() {
+        return this.rotate;
     }
 }
