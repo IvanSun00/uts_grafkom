@@ -1,5 +1,5 @@
 var GL;
-var line = [];
+var list = [];
 var alis = [];
 var arrTelinga = [];
 var arrMulut = [];
@@ -93,7 +93,7 @@ class MyObject {
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.OBJECT_FACES);
         GL.drawElements(GL.TRIANGLES, this.object_faces.length, GL.UNSIGNED_SHORT, 0);
         this.child.forEach(obj => {
-            if (alis.includes(obj) | arrMulut.includes(obj) | line.includes(obj)) {
+            if (alis.includes(obj) | arrMulut.includes(obj) | list.includes(obj)) {
                 obj.drawLine();            
             } else{
                 obj.draw();
@@ -108,7 +108,7 @@ class MyObject {
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.OBJECT_FACES);
         GL.drawElements(GL.LINE_STRIP, this.object_faces.length, GL.UNSIGNED_SHORT, 0);
         this.child.forEach(obj => {
-            if (alis.includes(obj) | arrMulut.includes(obj) | line.includes(obj)) {
+            if (alis.includes(obj) | arrMulut.includes(obj) | list.includes(obj)) {
                 obj.drawLine();            
             } else{
                 obj.draw();
@@ -135,11 +135,13 @@ class MyObject {
     rotate = [0, 0, 0];
     translate = [0, 0, 0];
     scale = [1, 1, 1];
+    ori = [0, 0, 0];
     setRotateMove(PHI, THETA, r) {
         let rot = glMatrix.quat.fromEuler(glMatrix.quat.create(), this.rotate[0] + PHI, this.rotate[1] + THETA, this.rotate[2] + r);
         let trans = glMatrix.vec3.fromValues(this.translate[0], this.translate[1], this.translate[2]);
         let scale = glMatrix.vec3.fromValues(this.scale[0], this.scale[1], this.scale[2]);
-        let ori = glMatrix.vec3.fromValues(-this.translate[0], -this.translate[1], -this.translate[2]); 
+        // let ori = glMatrix.vec3.fromValues(-this.translate[0], -this.translate[1], -this.translate[2]); 
+        let ori = glMatrix.vec3.fromValues(-this.translate[0]+this.ori[0], -this.translate[1]+this.ori[1], -this.translate[2]+this.ori[2]); 
         glMatrix.mat4.fromRotationTranslationScaleOrigin(this.MOVEMATRIX, rot, trans, scale, ori);
         this.child.forEach(obj => {
             obj.setRotateMove(PHI, THETA, r);
@@ -157,9 +159,6 @@ class MyObject {
         this.translate[0] += x;
         this.translate[1] += y;
         this.translate[2] += z;
-        // glMatrix.mat4.translate(this.MOVEMATRIX, this.MOVEMATRIX, [x,y,z]);
-        // console.log(this.nama);
-
         this.child.forEach(obj => {
             obj.setTranslateMove(x, y, z);
         });
@@ -175,14 +174,49 @@ class MyObject {
         });
     }
 
+
     setArrTranslate(x, y, z) {
         this.translate = [x, y, z];
         this.child.forEach(obj => {
             obj.setArrTranslate(x, y, z);
         });
     }
+    
+    setArrOrigin(x, y, z) {
+        this.ori = [x, y, z];
+        this.child.forEach(obj => {
+            obj.setArrOrigin(x, y, z);
+        });
+    }
+
+    setArrRotate(PHI, THETA, r) {
+        this.rotate = [PHI, THETA, r];
+        this.child.forEach(obj => {
+            obj.setArrRotate(PHI, THETA, r);
+        });
+    }
+
+    setArrScale(s) {
+        this.scale = [s, s, s];
+        this.child.forEach(obj => {
+            obj.setArrScale(s);
+        });
+    }
+
+    
 
     getRotate() {
         return this.rotate;
     }
+
+    getTranslate() {
+        return this.translate;
+    }
+
+    getScale() {
+        return this.scale;
+    }
+
+    // copy constructor
+   
 }

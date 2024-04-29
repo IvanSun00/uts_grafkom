@@ -601,7 +601,7 @@ function main(){
 
     // ======= POKEBALL ======= //
     {
-      var bawah_pokeball = generateHalfElips2(
+        var bawah_pokeball = generateHalfElips2(
         4.35,  //r
         36,
         18,
@@ -653,10 +653,63 @@ function main(){
           255, //b
           15 //count
         );
+
+        var jiggly_bawah_pokeball = generateHalfElips2(
+          4.35,  //r
+          36,
+          18,
+          1, //a
+          1, //b
+          1, //c
+          0, //x
+          0.2, //y
+          0.4, //z
+          221,
+          221,
+          227
+          )
+      
+          var jiggly_tengah_pokeball = generateTabung(
+          0, //x
+          0.2,   //y
+          -0.2, //z
+          1.3, //depth
+          4.35, //rad
+          0,  //r
+          0, //g
+          0, //b
+          15 //count
+          );
+      
+          var jiggly_atas_pokeball = generateHalfElips2(
+          4.35,  //r
+          36,
+          18,
+          1, //a
+          1, //b
+          1, //c
+          0, //x
+          -0.2, //y
+          0.2, //z
+          238,
+          21,
+          21
+          );
+          var jiggly_titik_pokeball = generateTabung(
+            -0.4, //x
+            -0.4,   //y
+            3.4, //z
+            1.2, //depth
+            0.6, //rad
+            255,  //r
+            255, //g
+            255, //b
+            15 //count
+          );
       
     }
 
-    // ====== JIGGLYPUFF ====== //
+    // ====== JIGGLYPUFFTITIK ====== //
     {
         //buat object2 untuk jigglypuff
       var headluar = generateElips2(
@@ -707,14 +760,14 @@ function main(){
 
       var right_leg = generateElips2(
           0.3, 36, 18, 
-          1.0, 1.0, 2.4, 
+          1.0, 1.0, 2.7, 
           0.5,-1.6,0.6,
           227, 171, 181
       );
 
       var left_leg = generateElips2(
           0.3, 36, 18, 
-          1.0, 1.0, 2.4, 
+          1.0, 1.0, 2.7, 
           -0.5,-1.6,0.6,
           227, 171, 181
       );
@@ -761,18 +814,28 @@ function main(){
           0,0,0  
       ); 
 
+      var jiggly_tempat_duduk = generateTabung(
+        0, //x
+        0.5,   // y
+        4.3, // z
+        0.3, //depth
+        4.35, //rad
+        51, //r
+        255, // g
+        255, //b
+        15 // count
+      );
+
       var curve = [-0.1,0.0, 0.1,-0.2, 0.3,0];
-      // yStart = -0.4;
-      // for (let index = 0; index < 4; index++) {
+      for (let index = 0; index < 4; index++) {
           var line_vertex = bezier.generateBSpline(curve,100,2, -0.1,-0.4,1.4);
           var line_faces = [];
           for (let index = 0; index < line_vertex.length/6; index++) {
               line_faces.push(index);
           }
           var mouth = new MyObject(line_vertex, line_faces, shader_vertex_source, shader_fragment_source);
-          // yStart += 0.005;
-          line.push(mouth);
-      // }
+          list.push(mouth);
+      }
   
       
       var jigglypuff = new MyObject([],[],shader_vertex_source, shader_fragment_source);
@@ -785,12 +848,17 @@ function main(){
       jigglypuff.addChilds([left_leg]); 
       jigglypuff.addChilds([mouth]);
       jigglypuff.addChilds([right_ear_outer]);
-      jigglypuff.addChilds([left_ear_outer]);
+      jigglypuff.addChilds([left_ear_outer,jiggly_tempat_duduk]);
       left_hand.addChilds([batang_pencil, pucuk_pencil]);
       left_eye_outer.addChilds([left_eye]);
       right_eye_outer.addChilds([right_eye]);
       left_ear_outer.addChilds([left_ear]);
       right_ear_outer.addChilds([right_ear]);
+
+      var jiggly_ball = new MyObject([],[],shader_vertex_source, shader_fragment_source);
+      jiggly_bawah_pokeball.addChilds([jiggly_tengah_pokeball,jiggly_titik_pokeball]);
+      jiggly_ball.addChilds([jiggly_bawah_pokeball,jiggly_atas_pokeball]);
+      jigglypuff.addChilds([jiggly_ball]);
     }
 
     // ====== POLIWAG ====== //
@@ -820,7 +888,7 @@ function main(){
           }
           var poliwag_spiral = new MyObject(line_vertex, line_faces, shader_vertex_source, shader_fragment_source);
           yStart += 0.005;
-          line.push(poliwag_spiral);
+          list.push(poliwag_spiral);
       }
 
       var poliwag_left_eye_outer = generateElipPara2(
@@ -865,7 +933,7 @@ function main(){
           }
           var poliwag_smile = new MyObject(line_vertex, line_faces, shader_vertex_source, shader_fragment_source);
           yStart += 0.005;
-          line.push(poliwag_smile);
+          list.push(poliwag_smile);
       }
 
       var poliwag_kaki_kanan = generateTabung(
@@ -919,15 +987,16 @@ function main(){
     kaki_kanan.addChilds([kaki_kanan_dalam,kuku_kaki_kanan_1,kuku_kaki_kanan_2,kuku_kaki_kanan_3,penghubung_kaki_kanan])
     kaki_kiri.addChilds([kaki_kiri_dalam,kuku_kaki_kiri_1,kuku_kaki_kiri_2,kuku_kaki_kiri_3,penghubung_kaki_kiri]);
     muka_dalam.addChilds([alisKiri,alisKanan,mulut]);
-
-    bawah_pokeball.addChilds([tengah_pokeball,titik_pokeball]);
     
-    main.addChilds([bawah_pokeball,atas_pokeball]);
+    var snorlax_ball = new MyObject([],[],shader_vertex_source, shader_fragment_source);
+    bawah_pokeball.addChilds([tengah_pokeball,titik_pokeball]);
+    snorlax_ball.addChilds([bawah_pokeball,atas_pokeball]);
+    main.addChilds([snorlax_ball]);
     //MATRIX
     var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
     var VIEWMATRIX = LIBS.get_I4(); 
 
-    LIBS.translateZ(VIEWMATRIX, -18);
+    LIBS.translateZ(VIEWMATRIX, -25);
 
 
   //DRAWING
@@ -961,7 +1030,15 @@ function main(){
   var maxTranslationKu = 0.5;
   var maxTranslationKaki = 0.3;
   var period3 = 3000;
+
+  jigglypuff.setArrTranslate(10,0,0)
+  jigglypuff.setArrScale(1.3)
+  jiggly_ball.setArrScale(1);
+  jiggly_tempat_duduk.setArrScale(1);
+  poliwag.setArrTranslate(-10,0,0)
+  jigglypuff.setArrOrigin(10,0,0)
   var animate = function (time) {
+    jigglypuff.setRotate(0,0.1,0)
     var elapsedTime = Date.now() - time_start;
     if (time > 0) {
         var dt = time - time_prev;
@@ -1001,19 +1078,42 @@ function main(){
       muka_dalam.setTranslateMove(translationTelinga,0,0);
     }
 
-    if(elapsedTime < 1500){
+    if(elapsedTime < 2000){
       atas_pokeball.setTranslateMove(0,0.04,0);
       bawah_pokeball.setTranslateMove(0,-0.0452,0);
-      //     topi.setTranslateMove(0,0.04,0)
       snorlax.setScale(0.998);
       atas_pokeball.setScale(0.998);
       bawah_pokeball.setScale(0.998);
+
+      jiggly_atas_pokeball.setTranslateMove(0,0.04,0);
+      jiggly_bawah_pokeball.setTranslateMove(0,-0.0452,0);
     }
 
     else if (time > 2000) { 
       snorlax.setRotate(0,0.1,0);
     }
-    console.log(elapsedTime)
+
+    //ball
+    {
+      glMatrix.mat4.rotateX(
+        jiggly_bawah_pokeball.MOVEMATRIX,
+        jiggly_bawah_pokeball.MOVEMATRIX,
+        LIBS.degToRad(90)
+      );
+
+      glMatrix.mat4.rotateX(
+        jiggly_atas_pokeball.MOVEMATRIX,
+        jiggly_atas_pokeball.MOVEMATRIX,
+        LIBS.degToRad(-90)
+      );
+
+      glMatrix.mat4.rotateX(
+        jiggly_tengah_pokeball.MOVEMATRIX,
+        jiggly_tengah_pokeball.MOVEMATRIX,
+        LIBS.degToRad(90)
+      );
+
+    }
 
     // snorlax
     {
@@ -1150,7 +1250,7 @@ function main(){
 
     }
 
-    // jigglypuff
+    // jigglyMove
     {
       function walking(){
             left_leg.setRotate(
@@ -1179,8 +1279,24 @@ function main(){
           )
       }
 
+      function moveEar(){
+        var jiggly_earTrans =
+        Math.sin(((elapsedTime % 2000) / 2000) * Math.PI * 2) *
+        0.004;
+        left_ear_outer.setTranslateMove(jiggly_earTrans,jiggly_earTrans,-jiggly_earTrans);
+        right_ear_outer.setTranslateMove(-jiggly_earTrans,-jiggly_earTrans,jiggly_earTrans);
+      }
+      
       walking();
       lambai();
+      moveEar();
+
+      glMatrix.mat4.rotateX(
+        jiggly_tempat_duduk.MOVEMATRIX,
+        jiggly_tempat_duduk.MOVEMATRIX,
+        LIBS.degToRad(90)
+      );
+
 
       glMatrix.mat4.rotateX(right_hand.MOVEMATRIX, right_hand.MOVEMATRIX, LIBS.degToRad(20));
       glMatrix.mat4.rotateY(right_hand.MOVEMATRIX, right_hand.MOVEMATRIX, LIBS.degToRad(30));     
@@ -1242,8 +1358,7 @@ function main(){
 
 
     }
-    jigglypuff.setArrTranslate(10,0,0)
-    poliwag.setArrTranslate(-10,0,0)
+   
   
     GL.viewport(0, 0, CANVAS.width, CANVAS.height);
     GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
