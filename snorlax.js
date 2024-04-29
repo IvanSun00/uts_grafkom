@@ -1044,11 +1044,12 @@ function main(){
       255
       );
 
-      var tanah = generateHalfElips2(
-        4.35, 36, 18,
-        10, 1, 10,
-        10, 0, 10.4,
-        51, 255, 51
+      //ini tanah gua
+      var tanah = generateTabung(
+        0, 1, 10,
+        20, 200,
+        51, 255, 51,
+        1
       );
       
 
@@ -1111,10 +1112,6 @@ function main(){
         255,
         0
       );
-
-
-
-
 
       var awan1 = new MyObject([],[],shader_vertex_source, shader_fragment_source);
       awan1.addChilds([buletan_awan1_1,buletan_awan1_2,buletan_awan1_3]);
