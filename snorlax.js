@@ -1042,12 +1042,19 @@ function main(){
       102,
       255,
       255
-        )
+      );
+
+      var tanah = generateHalfElips2(
+        4.35, 36, 18,
+        10, 1, 10,
+        10, 0, 10.4,
+        51, 255, 51
+      );
 
       var awan1 = new MyObject([],[],shader_vertex_source, shader_fragment_source);
       awan1.addChilds([buletan_awan_1,buletan_awan_2,buletan_awan_3]);
 
-      environment.addChilds([awan1]);
+      environment.addChilds([awan1, tanah]);
 
     }
 
@@ -1171,6 +1178,14 @@ function main(){
         LIBS.degToRad(90)
       );
 
+    }
+
+    {
+      glMatrix.mat4.rotateX(
+        tanah.MOVEMATRIX,
+        tanah.MOVEMATRIX,
+        LIBS.degToRad(90)
+      );
     }
 
     // SNORLAX MOVE
