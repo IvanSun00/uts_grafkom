@@ -1089,13 +1089,32 @@ function main(){
         255
       );
 
+      var matahari = generateElips2(
+        3,
+        36,
+        18,
+        1,
+        1,
+        0.6,
+        7,
+        6,
+        2,
+        255,
+        255,
+        0
+      );
+
+
+
+
+
       var awan1 = new MyObject([],[],shader_vertex_source, shader_fragment_source);
       awan1.addChilds([buletan_awan1_1,buletan_awan1_2,buletan_awan1_3]);
 
       var awan2 = new MyObject([],[],shader_vertex_source, shader_fragment_source);
       awan2.addChilds([buletan_awan2_1,buletan_awan2_2,buletan_awan2_3]);
 
-      environment.addChilds([awan1,awan2]);
+      environment.addChilds([awan1,awan2,matahari]);
 
     }
 
