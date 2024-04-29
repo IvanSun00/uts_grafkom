@@ -10,6 +10,27 @@
     <script src="snorlax.js"></script>
     <script src="bezier.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gl-matrix@3.4.3/gl-matrix-min.min.js"></script>
+
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+        }
+        canvas {
+          background-image: url(./assets/parks.jpg);
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+  
+        @keyframes spin {
+          0% {
+            transform: translateZ(-100px) rotateY(0deg);
+          }
+          100% {
+            transform: translateZ(-100px) rotateY(360deg);
+          }
+        }
+      </style>  
 </head>
 <body style="margin: 0px;">
     <canvas id="mycanvas" style="background-color: grey;">
