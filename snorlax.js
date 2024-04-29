@@ -1627,7 +1627,7 @@ function main(){
       
     }
 
-    poliwag
+    // poliwag
     {  
       glMatrix.mat4.rotateX(
         poliwag_tempat_duduk.MOVEMATRIX,
@@ -1641,10 +1641,6 @@ function main(){
         LIBS.degToRad(-35)
       );
 
-      // if(elapsedTime>0&&elapsedTime<1000)
-      // {
-      //     poliwag.setScale(1.01);
-      // }
       if(elapsedTime>12000){
         poliwag.setRotate(0, 0.5, 0)
       }
