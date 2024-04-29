@@ -140,7 +140,6 @@ class MyObject {
         let rot = glMatrix.quat.fromEuler(glMatrix.quat.create(), this.rotate[0] + PHI, this.rotate[1] + THETA, this.rotate[2] + r);
         let trans = glMatrix.vec3.fromValues(this.translate[0], this.translate[1], this.translate[2]);
         let scale = glMatrix.vec3.fromValues(this.scale[0], this.scale[1], this.scale[2]);
-        // let ori = glMatrix.vec3.fromValues(-this.translate[0], -this.translate[1], -this.translate[2]); 
         let ori = glMatrix.vec3.fromValues(-this.translate[0]+this.ori[0], -this.translate[1]+this.ori[1], -this.translate[2]+this.ori[2]); 
         glMatrix.mat4.fromRotationTranslationScaleOrigin(this.MOVEMATRIX, rot, trans, scale, ori);
         this.child.forEach(obj => {

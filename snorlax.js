@@ -558,8 +558,8 @@ function main(){
           1, //radX
           1, //radY
           0, //173,
-          0, //216,
-          255 //230
+          204, //216,
+          204 //230
         );
     
         var tempat_duduk = generateTabung(
@@ -1088,9 +1088,9 @@ function main(){
         1,
         0.5,
         1,
-        -1.2,
-        1.8,
-        2,
+        3.2,
+        10.8,
+        -10,
         102,
         255,
         255
@@ -1103,9 +1103,9 @@ function main(){
       1,
       0.5,
       1,
-      1.5,
-      1.7,
-      2,
+      6.5,
+      10.7,
+      -10,
       102,
       255,
       255
@@ -1118,9 +1118,9 @@ function main(){
       1,
       0.5,
       1,
-      -4.5,
-      1.7,
-      2,
+      0.5,
+      10.7,
+      -10,
       102,
       255,
       255
@@ -1128,8 +1128,8 @@ function main(){
 
       //ini tanah gua
       var tanah = generateTabung(
-        0, 1, 10,
-        20, 200,
+        0, 1, 15,
+        1, 200,
         51, 255, 51,
         1
       );
@@ -1144,7 +1144,7 @@ function main(){
         1,
         -10,
         6,
-        2,
+        -10,
         102,
         255,
         255
@@ -1159,7 +1159,7 @@ function main(){
         1,
         -13,
         6,
-        2,
+        -10,
         102,
         255,
         255
@@ -1174,7 +1174,7 @@ function main(){
         1,
         -7,
         6,
-        2,
+        -10,
         102,
         255,
         255
@@ -1187,9 +1187,9 @@ function main(){
         1,
         1,
         0.6,
-        7,
-        6,
-        2,
+        15,
+        13,
+        -10,
         255,
         255,
         0
@@ -1210,7 +1210,7 @@ function main(){
     var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
     var VIEWMATRIX = LIBS.get_I4(); 
 
-    LIBS.translateZ(VIEWMATRIX, -25);
+    LIBS.translateZ(VIEWMATRIX, -35);
 
 
   //DRAWING
@@ -1232,8 +1232,8 @@ function main(){
   
   // PENYESUAIAN
   var time_start = Date.now();
-  var maxTranslation1 = 0.002;
-  var maxTranslationTangan = 0.002; // Maksimum jarak translasi dari pusat (dalam unit)
+  var maxTranslation1 = 0.01;
+  var maxTranslationTangan = 0.01; // Maksimum jarak translasi dari pusat (dalam unit)
   var period = 2000; // Periode gerakan (dalam milidetik)
 
   //timy
@@ -1242,8 +1242,8 @@ function main(){
   var period2 = 200;
 
   //ivan
-  var maxTranslationKu = 0.5;
-  var maxTranslationKaki = 0.3;
+  var maxTranslationKu = 0.3;
+  var maxTranslationKaki = 0.1;
   var period3 = 3000;
 
   //inisiasi
@@ -1259,10 +1259,6 @@ function main(){
   poliwag.setArrTranslate(-30,0,0)
   
   snorlaxAll.setArrScale(0.3)
-
-
-  // console.log(poliwag.getTranslate())
-  // console.log(poliwag_ball.getTranslate())
 
   var animate = function (time) {
     var elapsedTime = Date.now() - time_start;
@@ -1287,13 +1283,16 @@ function main(){
       poliwagAll.setTranslateMove(0.18,0,0);
     }
 
+    //rotasi bola
     if(elapsedTime > 1500 && elapsedTime < 3000){
+        // snorlaxAll.setArrOrigin(6,0,0);
         jigglypuffAll.setRotate(0,4.2,0);
         poliwagAll.setRotate(0,4.2,0);
         snorlaxAll.setRotate(0,4.2,0);
+        
     }
 
-    //buka snorlax
+    //maju snorlax
     if(elapsedTime > 3000 && elapsedTime < 4500){
         jigglyOri = jigglypuffAll.getTranslate();
         jigglypuffAll.setArrOrigin(jigglyOri[0],jigglyOri[1],jigglyOri[2]);
@@ -1306,17 +1305,20 @@ function main(){
         snorlaxAll.setScale(1.008);
     }
 
+    //besarin snorlax
     if(elapsedTime > 4500 && elapsedTime < 5000){
         snorlax.setScale(1.002);
 
     }
 
+    //buka snorlax
     if(elapsedTime > 5000 && elapsedTime < 7000){
         atas_pokeball.setTranslateMove(0,0.04,0);
         bawah_pokeball.setTranslateMove(0,-0.0452,0);
         snorlaxAll.setScale(0.999);
     }
 
+    //maju mundur bola
     if(elapsedTime > 7000 && elapsedTime < 8500){
         jigglypuffAll.setScale(1.005);
         poliwagAll.setScale(1.005);
@@ -1326,6 +1328,7 @@ function main(){
         poliwag.setTranslateMove(-0.03,0,0);
     }
 
+    //buka bola
     if(elapsedTime > 9000 && elapsedTime < 11000){
         jiggly_atas_pokeball.setTranslateMove(0,0.04,0);
         jiggly_bawah_pokeball.setTranslateMove(0,-0.0452,0);
@@ -1336,9 +1339,7 @@ function main(){
         poliwagAll.setScale(0.999);
     }
 
-
-
-    //Pembuka Cone
+    //Snorlax movement
     if (elapsedTime > 1500){
       //Gerak tangan Kanan
       var translationKanan =
@@ -1352,7 +1353,7 @@ function main(){
         maxTranslationTangan;
         tangan_kiri.setTranslateMove(translationKanan,-translationKiri, 0); // Atur pergerakan tangan kanan ke kanan dan kiri
 
-      // Gerak Telinga
+      // Gerak Telinga & muka
       var translationTelinga =
       Math.sin(((elapsedTime+period / 2 % period) / period) * Math.PI * 2) *
       maxTranslation1;
@@ -1361,25 +1362,8 @@ function main(){
       muka_dalam.setTranslateMove(translationTelinga,0,0);
     }
 
-    //pembuka ball
-    // if(elapsedTime < 4000  && elapsedTime > 2000){
-    //   atas_pokeball.setTranslateMove(0,0.04,0);
-    //   bawah_pokeball.setTranslateMove(0,-0.0452,0);
-    //   snorlax.setScale(0.998);
-    
-    //   jiggly_atas_pokeball.setTranslateMove(0,0.04,0);
-    //   jiggly_bawah_pokeball.setTranslateMove(0,-0.0452,0);
-    //   jigglypuff.setScale(1.0002);
+  
 
-      
-    //   poliwag_atas_pokeball.setTranslateMove(0,0.04,0);
-    //   poliwag_bawah_pokeball.setTranslateMove(0,-0.0452,0);
-    //   poliwag.setScale(1.0002);
-    // }
-
-    else if (elapsedTime > 2000) { 
-      snorlax.setRotate(0,0.1,0);
-    }
 
     //ball
     {
@@ -1431,6 +1415,9 @@ function main(){
 
     // SNORLAX MOVE
     {
+      if(elapsedTime > 12000){
+        snorlax.setRotate(0,0.5,0);
+      }
       glMatrix.mat4.rotateX(
         topi.MOVEMATRIX,
         topi.MOVEMATRIX,
