@@ -991,7 +991,7 @@ function main(){
     var snorlax_ball = new MyObject([],[],shader_vertex_source, shader_fragment_source);
     bawah_pokeball.addChilds([tengah_pokeball,titik_pokeball]);
     snorlax_ball.addChilds([bawah_pokeball,atas_pokeball]);
-    main.addChilds([snorlax_ball]);
+    snorlax.addChilds([snorlax_ball]);
     //MATRIX
     var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
     var VIEWMATRIX = LIBS.get_I4(); 
@@ -1032,7 +1032,7 @@ function main(){
   var period3 = 3000;
 
   jigglypuff.setArrTranslate(10,0,0)
-  jigglypuff.setArrScale(1.3)
+  jigglypuff.setArrScale(1.5)
   jiggly_ball.setArrScale(1);
   jiggly_tempat_duduk.setArrScale(1);
   poliwag.setArrTranslate(-10,0,0)
@@ -1082,11 +1082,10 @@ function main(){
       atas_pokeball.setTranslateMove(0,0.04,0);
       bawah_pokeball.setTranslateMove(0,-0.0452,0);
       snorlax.setScale(0.998);
-      atas_pokeball.setScale(0.998);
-      bawah_pokeball.setScale(0.998);
-
+    
       jiggly_atas_pokeball.setTranslateMove(0,0.04,0);
       jiggly_bawah_pokeball.setTranslateMove(0,-0.0452,0);
+      jigglypuff.setScale(1.0002);
     }
 
     else if (time > 2000) { 
