@@ -999,7 +999,7 @@ function main(){
 
     // env
     {
-      var buletan_awan_1 = generateElips2(
+      var buletan_awan1_1 = generateElips2(
         3,
         36,
         18,
@@ -1014,7 +1014,7 @@ function main(){
         255
       )
 
-      var buletan_awan_2 = generateElips2(
+      var buletan_awan1_2 = generateElips2(
       2.2,
       36,
       18,
@@ -1029,7 +1029,7 @@ function main(){
       255
       )
 
-      var buletan_awan_3 = generateElips2(
+      var buletan_awan1_3 = generateElips2(
       2.2,
       36,
       18,
@@ -1042,12 +1042,60 @@ function main(){
       102,
       255,
       255
-        )
+      )
+
+      var buletan_awan2_1 = generateElips2(
+        2.6,
+        36,
+        18,
+        1,
+        0.5,
+        1,
+        -10,
+        6,
+        2,
+        102,
+        255,
+        255
+      );
+
+      var buletan_awan2_2 = generateElips2(
+        2,
+        36,
+        18,
+        1,
+        0.5,
+        1,
+        -13,
+        6,
+        2,
+        102,
+        255,
+        255
+      );
+
+      var buletan_awan2_3 = generateElips2(
+        2,
+        36,
+        18,
+        1,
+        0.5,
+        1,
+        -7,
+        6,
+        2,
+        102,
+        255,
+        255
+      );
 
       var awan1 = new MyObject([],[],shader_vertex_source, shader_fragment_source);
-      awan1.addChilds([buletan_awan_1,buletan_awan_2,buletan_awan_3]);
+      awan1.addChilds([buletan_awan1_1,buletan_awan1_2,buletan_awan1_3]);
 
-      environment.addChilds([awan1]);
+      var awan2 = new MyObject([],[],shader_vertex_source, shader_fragment_source);
+      awan2.addChilds([buletan_awan2_1,buletan_awan2_2,buletan_awan2_3]);
+
+      environment.addChilds([awan1,awan2]);
 
     }
 
