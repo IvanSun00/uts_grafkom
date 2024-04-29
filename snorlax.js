@@ -138,7 +138,7 @@ function main(){
         }
     `
     initShader(shader_vertex_source, shader_fragment_source); //ini untuk init karena beda file dan diluar scope
-    //===== SNORLAX =====//
+    //===== SNORLAX TITIK =====//
     {
       var muka = generateElips2(
         1.0,
@@ -974,9 +974,12 @@ function main(){
     //setelah definisi semua object, panggil object utama disini
     var main = new MyObject([],[],shader_vertex_source, shader_fragment_source);
     var snorlax = new MyObject([],[],shader_vertex_source, shader_fragment_source);
+    var environment = new MyObject([],[],shader_vertex_source, shader_fragment_source);
+  
     main.addChilds([snorlax]);
     main.addChilds([jigglypuff]);
     main.addChilds([poliwag]);
+    main.addChilds([environment]);
     snorlax.addChilds([muka,muka_dalam,telinga_kiri,telinga_kanan]);
     snorlax.addChilds([badan,badan_dalam,tangan_kanan,tangan_kiri]);
     snorlax.addChilds([kaki_kanan,kaki_kiri]);
@@ -992,6 +995,63 @@ function main(){
     bawah_pokeball.addChilds([tengah_pokeball,titik_pokeball]);
     snorlax_ball.addChilds([bawah_pokeball,atas_pokeball]);
     snorlax.addChilds([snorlax_ball]);
+
+
+    // env
+    {
+      var buletan_awan_1 = generateElips2(
+        3,
+        36,
+        18,
+        1,
+        0.5,
+        1,
+        -1.2,
+        1.8,
+        2,
+        102,
+        255,
+        255
+      )
+
+      var buletan_awan_2 = generateElips2(
+      2.2,
+      36,
+      18,
+      1,
+      0.5,
+      1,
+      1.5,
+      1.7,
+      2,
+      102,
+      255,
+      255
+      )
+
+      var buletan_awan_3 = generateElips2(
+      2.2,
+      36,
+      18,
+      1,
+      0.5,
+      1,
+      -4.5,
+      1.7,
+      2,
+      102,
+      255,
+      255
+        )
+
+      var awan1 = new MyObject([],[],shader_vertex_source, shader_fragment_source);
+      awan1.addChilds([buletan_awan_1,buletan_awan_2,buletan_awan_3]);
+
+      environment.addChilds([awan1]);
+
+    }
+
+
     //MATRIX
     var PROJMATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
     var VIEWMATRIX = LIBS.get_I4(); 
@@ -1055,7 +1115,6 @@ function main(){
     GL.viewport(0, 0, CANVAS.width, CANVAS.height);
     GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT)
         
-    //Pembuka Cone
     if (time > 1500){
       //Gerak tangan Kanan
       var translationKanan =
@@ -1114,7 +1173,7 @@ function main(){
 
     }
 
-    // snorlax
+    // SNORLAX MOVE
     {
       glMatrix.mat4.rotateX(
         topi.MOVEMATRIX,
